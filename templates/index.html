@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSI Analysis</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form method="GET" action="{{ url_for('index') }}">
+            <div class="form-group">
+                <label for="timeframe">Select Timeframe:</label>
+                <select class="form-control" name="timeframe" id="timeframe">
+                    <option value="5m" {% if selected_timeframe == '5m' %}selected{% endif %}>5m</option>
+                    <option value="15m" {% if selected_timeframe == '15m' %}selected{% endif %}>15m</option>
+                    <option value="1h" {% if selected_timeframe == '1h' %}selected{% endif %}>1h</option>
+                    <option value="4h" {% if selected_timeframe == '4h' %}selected{% endif %}>4h</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Apply</button>
+        </form>
+
+        <h1 class="display-4">RSI Analysis ({{ selected_timeframe }})</h1>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Symbol</th>
+                    <th>Latest RSI</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.symbol }}</td>
+                        <td>{{ result.latest_rsi }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
